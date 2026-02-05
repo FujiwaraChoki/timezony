@@ -9,6 +9,8 @@
 </p>
 
 <p align="center">
+  <a href="https://github.com/FujiwaraChoki/timezony/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/FujiwaraChoki/timezony/ci.yml?style=flat-square&label=CI" alt="CI"></a>
+  <a href="https://github.com/FujiwaraChoki/timezony/releases"><img src="https://img.shields.io/github/v/release/FujiwaraChoki/timezony?style=flat-square&label=Release" alt="Release"></a>
   <a href="https://github.com/FujiwaraChoki/timezony/releases"><img src="https://img.shields.io/badge/platform-macOS%2014%2B-blue?style=flat-square" alt="Platform"></a>
   <a href="https://swift.org"><img src="https://img.shields.io/badge/Swift-5.9-orange?style=flat-square&logo=swift" alt="Swift 5.9"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-green?style=flat-square" alt="License"></a>

@@ -1,0 +1,100 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build-and-release:
+    name: Build and Release
+    runs-on: macos-14
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Select Xcode
+        run: sudo xcode-select -s /Applications/Xcode_15.2.app/Contents/Developer
+
+      - name: Show Xcode version
+        run: xcodebuild -version
+
+      - name: Build Release
+        run: |
+          xcodebuild -project Timezony.xcodeproj \
+            -scheme Timezony \
+            -configuration Release \
+            -derivedDataPath build \
+            -destination 'platform=macOS' \
+            build
+
+      - name: Create App Bundle
+        run: |
+          # Find the built app
+          APP_PATH=$(find build -name "Timezony.app" -type d | head -1)
+          echo "Found app at: $APP_PATH"
+
+          # Create a zip for distribution
+          cd "$(dirname "$APP_PATH")"
+          zip -r -y Timezony-${{ github.ref_name }}.zip Timezony.app
+          mv Timezony-${{ github.ref_name }}.zip $GITHUB_WORKSPACE/
+
+      - name: Create DMG
+        run: |
+          # Find the built app
+          APP_PATH=$(find build -name "Timezony.app" -type d | head -1)
+
+          # Create a temporary directory for DMG contents
+          mkdir -p dmg_contents
+          cp -R "$APP_PATH" dmg_contents/
+
+          # Create Applications symlink
+          ln -s /Applications dmg_contents/Applications
+
+          # Create DMG
+          hdiutil create -volname "Timezony" \
+            -srcfolder dmg_contents \
+            -ov -format UDZO \
+            Timezony-${{ github.ref_name }}.dmg
+
+      - name: Generate Release Notes
+        id: release_notes
+        run: |
+          echo "notes<<EOF" >> $GITHUB_OUTPUT
+          echo "## Timezony ${{ github.ref_name }}" >> $GITHUB_OUTPUT
+          echo "" >> $GITHUB_OUTPUT
+          echo "### Installation" >> $GITHUB_OUTPUT
+          echo "" >> $GITHUB_OUTPUT
+          echo "**Option 1: DMG (Recommended)**" >> $GITHUB_OUTPUT
+          echo "1. Download \`Timezony-${{ github.ref_name }}.dmg\`" >> $GITHUB_OUTPUT
+          echo "2. Open the DMG file" >> $GITHUB_OUTPUT
+          echo "3. Drag Timezony to your Applications folder" >> $GITHUB_OUTPUT
+          echo "4. Launch from Applications or Spotlight" >> $GITHUB_OUTPUT
+          echo "" >> $GITHUB_OUTPUT
+          echo "**Option 2: ZIP**" >> $GITHUB_OUTPUT
+          echo "1. Download \`Timezony-${{ github.ref_name }}.zip\`" >> $GITHUB_OUTPUT
+          echo "2. Extract the zip file" >> $GITHUB_OUTPUT
+          echo "3. Move Timezony.app to your Applications folder" >> $GITHUB_OUTPUT
+          echo "" >> $GITHUB_OUTPUT
+          echo "### Requirements" >> $GITHUB_OUTPUT
+          echo "- macOS 14.0 (Sonoma) or later" >> $GITHUB_OUTPUT
+          echo "" >> $GITHUB_OUTPUT
+          echo "### Note" >> $GITHUB_OUTPUT
+          echo "Since this app is not notarized, you may need to right-click and select \"Open\" the first time you launch it." >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          name: Timezony ${{ github.ref_name }}
+          body: ${{ steps.release_notes.outputs.notes }}
+          draft: false
+          prerelease: false
+          files: |
+            Timezony-${{ github.ref_name }}.zip
+            Timezony-${{ github.ref_name }}.dmg
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
