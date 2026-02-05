@@ -2,8 +2,8 @@ import SwiftUI
 
 @MainActor
 struct AddTimezoneView: View {
-    @Environment(\.dismiss) private var dismiss
     @Bindable var manager: TimezoneManager
+    let onDismiss: () -> Void
 
     @State private var searchText = ""
 
@@ -19,15 +19,36 @@ struct AddTimezoneView: View {
         VStack(spacing: 0) {
             // Header
             HStack {
-                Text("Add Timezone")
-                    .font(.headline)
-                Spacer()
-                Button(action: { dismiss() }) {
-                    Image(systemName: "xmark.circle.fill")
-                        .foregroundStyle(.secondary)
-                        .imageScale(.large)
+                Button(action: {
+                    withAnimation(.easeInOut(duration: 0.2)) {
+                        onDismiss()
+                    }
+                }) {
+                    HStack(spacing: 4) {
+                        Image(systemName: "chevron.left")
+                            .font(.system(size: 14, weight: .semibold))
+                        Text("Back")
+                            .font(.subheadline)
+                    }
+                    .foregroundStyle(.secondary)
                 }
                 .buttonStyle(.plain)
+
+                Spacer()
+
+                Text("Add Timezone")
+                    .font(.headline)
+
+                Spacer()
+
+                // Invisible spacer for centering
+                HStack(spacing: 4) {
+                    Image(systemName: "chevron.left")
+                        .font(.system(size: 14, weight: .semibold))
+                    Text("Back")
+                        .font(.subheadline)
+                }
+                .opacity(0)
             }
             .padding()
 
@@ -63,14 +84,16 @@ struct AddTimezoneView: View {
                             isAdded: manager.timezones.contains { $0.identifier == tz.identifier }
                         ) {
                             manager.addTimezone(tz.identifier)
-                            dismiss()
+                            withAnimation(.easeInOut(duration: 0.2)) {
+                                onDismiss()
+                            }
                         }
                     }
                 }
             }
-            .frame(maxHeight: 300)
+            .frame(maxHeight: 350)
         }
-        .frame(width: 300)
+        .frame(width: 340)
         .background(.ultraThinMaterial)
     }
 }
@@ -103,6 +126,9 @@ struct TimezoneListItem: View {
             if isAdded {
                 Image(systemName: "checkmark.circle.fill")
                     .foregroundStyle(.green)
+            } else if isHovered {
+                Image(systemName: "plus.circle.fill")
+                    .foregroundStyle(Color.coralAccent)
             }
         }
         .padding(.horizontal, 16)
@@ -119,5 +145,5 @@ struct TimezoneListItem: View {
 }
 
 #Preview {
-    AddTimezoneView(manager: TimezoneManager())
+    AddTimezoneView(manager: TimezoneManager(), onDismiss: {})
 }

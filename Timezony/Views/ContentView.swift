@@ -3,7 +3,7 @@ import SwiftUI
 @MainActor
 struct ContentView: View {
     @Bindable var manager: TimezoneManager
-    @State private var showingAddSheet = false
+    @State private var showingAddView = false
 
     // Time converter state
     @State private var isConverterActive = false
@@ -15,6 +15,17 @@ struct ContentView: View {
     }
 
     var body: some View {
+        if showingAddView {
+            AddTimezoneView(
+                manager: manager,
+                onDismiss: { showingAddView = false }
+            )
+        } else {
+            mainView
+        }
+    }
+
+    private var mainView: some View {
         TimelineView(.periodic(from: .now, by: 1.0)) { timeline in
             VStack(spacing: 0) {
                 // Header
@@ -45,9 +56,6 @@ struct ContentView: View {
             .frame(width: 340)
             .background(.ultraThinMaterial)
         }
-        .sheet(isPresented: $showingAddSheet) {
-            AddTimezoneView(manager: manager)
-        }
     }
 
     private var header: some View {
@@ -65,7 +73,11 @@ struct ContentView: View {
 
             Spacer()
 
-            Button(action: { showingAddSheet = true }) {
+            Button(action: {
+                withAnimation(.easeInOut(duration: 0.2)) {
+                    showingAddView = true
+                }
+            }) {
                 Image(systemName: "plus.circle.fill")
                     .font(.title2)
                     .foregroundStyle(Color.coralAccent)
