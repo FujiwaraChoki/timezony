@@ -9,10 +9,10 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/yourusername/timezony/releases"><img src="https://img.shields.io/badge/platform-macOS%2014%2B-blue?style=flat-square" alt="Platform"></a>
+  <a href="https://github.com/FujiwaraChoki/timezony/releases"><img src="https://img.shields.io/badge/platform-macOS%2014%2B-blue?style=flat-square" alt="Platform"></a>
   <a href="https://swift.org"><img src="https://img.shields.io/badge/Swift-5.9-orange?style=flat-square&logo=swift" alt="Swift 5.9"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-green?style=flat-square" alt="License"></a>
-  <a href="https://github.com/yourusername/timezony/stargazers"><img src="https://img.shields.io/github/stars/yourusername/timezony?style=flat-square" alt="Stars"></a>
+  <a href="https://github.com/FujiwaraChoki/timezony/stargazers"><img src="https://img.shields.io/github/stars/FujiwaraChoki/timezony?style=flat-square" alt="Stars"></a>
 </p>
 
 <p align="center">
@@ -53,7 +53,7 @@ Lives quietly in your menu bar with no Dock icon. Click to open, click away to c
 ## Installation
 
 ### Download
-Download the latest release from the [Releases](https://github.com/yourusername/timezony/releases) page.
+Download the latest release from the [Releases](https://github.com/FujiwaraChoki/timezony/releases) page.
 
 ### Build from Source
 
@@ -63,7 +63,7 @@ Download the latest release from the [Releases](https://github.com/yourusername/
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/timezony.git
+git clone https://github.com/FujiwaraChoki/timezony.git
 cd timezony
 
 # Open in Xcode

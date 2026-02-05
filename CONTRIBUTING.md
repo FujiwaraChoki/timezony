@@ -44,7 +44,7 @@ Enhancement suggestions are welcome! Please provide:
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/timezony.git
+git clone https://github.com/FujiwaraChoki/timezony.git
 cd timezony
 
 # Open in Xcode
