@@ -44,10 +44,10 @@ Lives quietly in your menu bar with no Dock icon. Click to open, click away to c
 
 ---
 
-## Screenshots
+## Screenshot
 
 <p align="center">
-  <i>Coming soon</i>
+  <img src="screenshot.png" width="340" alt="Timezony Screenshot">
 </p>
 
 ---
