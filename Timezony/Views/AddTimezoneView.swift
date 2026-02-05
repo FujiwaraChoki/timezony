@@ -1,5 +1,6 @@
 import SwiftUI
 
+@MainActor
 struct AddTimezoneView: View {
     @Environment(\.dismiss) private var dismiss
     @Bindable var manager: TimezoneManager
@@ -74,6 +75,7 @@ struct AddTimezoneView: View {
     }
 }
 
+@MainActor
 struct TimezoneListItem: View {
     let displayName: String
     let identifier: String

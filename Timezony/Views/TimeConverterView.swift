@@ -1,5 +1,6 @@
 import SwiftUI
 
+@MainActor
 struct TimeConverterView: View {
     @Binding var isActive: Bool
     @Binding var selectedDate: Date

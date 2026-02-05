@@ -1,5 +1,6 @@
 import SwiftUI
 
+@MainActor
 @Observable
 final class TimezoneManager {
     private static let storageKey = "savedTimezones"

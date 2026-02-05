@@ -1,5 +1,6 @@
 import SwiftUI
 
+@MainActor
 struct ContentView: View {
     @Bindable var manager: TimezoneManager
     @State private var showingAddSheet = false

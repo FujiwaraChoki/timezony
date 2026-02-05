@@ -1,5 +1,6 @@
 import SwiftUI
 
+@MainActor
 struct TimeBarView: View {
     let timeZone: TimeZone
     let currentHour: Double

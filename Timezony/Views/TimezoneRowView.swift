@@ -1,5 +1,6 @@
 import SwiftUI
 
+@MainActor
 struct TimezoneRowView: View {
     let timezone: SavedTimezone
     let currentHour: Double
