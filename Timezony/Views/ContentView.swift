@@ -107,8 +107,12 @@ struct ContentView: View {
                 .listRowSeparator(.hidden)
                 .listRowBackground(Color.clear)
             }
-            .onDelete(perform: manager.removeTimezones)
-            .onMove(perform: manager.moveTimezones)
+            .onDelete { offsets in
+                manager.removeTimezones(at: offsets)
+            }
+            .onMove { source, destination in
+                manager.moveTimezones(from: source, to: destination)
+            }
         }
         .listStyle(.plain)
         .scrollContentBackground(.hidden)

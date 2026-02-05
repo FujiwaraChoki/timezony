@@ -1,6 +1,7 @@
 import SwiftUI
 
 @main
+@MainActor
 struct TimeZonyApp: App {
     @State private var manager = TimezoneManager()
 
